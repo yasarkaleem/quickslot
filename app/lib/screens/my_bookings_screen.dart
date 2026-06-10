@@ -15,8 +15,6 @@ class MyBookingsScreen extends StatefulWidget {
 }
 
 class _MyBookingsScreenState extends State<MyBookingsScreen> {
-  int? _lastUserId;
-
   void _load(int userId) =>
       context.read<BookingsProvider>().loadBookings(userId);
 
@@ -70,13 +68,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
   Widget build(BuildContext context) {
     final userId   = context.watch<AuthProvider>().userId!;
     final provider = context.watch<BookingsProvider>();
-
-    if (userId != _lastUserId) {
-      _lastUserId = userId;
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) { if (mounted) _load(userId); },
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(

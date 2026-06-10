@@ -11,6 +11,9 @@ import 'screens/login_screen.dart';
 import 'screens/venues_screen.dart';
 import 'screens/my_bookings_screen.dart';
 
+// Tab index for the My Bookings tab.
+const int _kBookingsTab = 1;
+
 void main() async {
   // Required before any plugin (secure storage) is used before runApp.
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,7 @@ void main() async {
   late final AuthProvider authProvider;
 
   final apiClient = ApiClient(
-    baseUrl: 'http://localhost:3000', // iOS simulator → host machine
+    baseUrl: 'https://quickslot-production.up.railway.app',
     getToken: () => authProvider.token,
   );
 
@@ -88,7 +91,15 @@ class _HomeShellState extends State<_HomeShell> {
       body: IndexedStack(index: _index, children: _screens),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        onDestinationSelected: (i) {
+          setState(() => _index = i);
+          if (i == _kBookingsTab) {
+            final userId = context.read<AuthProvider>().userId;
+            if (userId != null) {
+              context.read<BookingsProvider>().loadBookings(userId);
+            }
+          }
+        },
         destinations: const [
           NavigationDestination(icon: Icon(Icons.stadium_outlined),  label: 'Venues'),
           NavigationDestination(icon: Icon(Icons.bookmark_outline),  label: 'My Bookings'),
