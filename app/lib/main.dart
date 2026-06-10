@@ -109,12 +109,49 @@ class _HomeShellState extends State<_HomeShell> {
   }
 }
 
-// Shown for the brief moment between app launch and tryRestoreSession completing.
 class _SplashScreen extends StatelessWidget {
   const _SplashScreen();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    final scheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      backgroundColor: scheme.primary,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.sports_tennis, size: 80, color: scheme.onPrimary),
+            const SizedBox(height: 24),
+            Text(
+              'QuickSlot',
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: scheme.onPrimary,
+                letterSpacing: 1.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Book your court instantly',
+              style: TextStyle(
+                fontSize: 15,
+                color: scheme.onPrimary.withValues(alpha: 0.8),
+              ),
+            ),
+            const SizedBox(height: 48),
+            SizedBox(
+              width: 28,
+              height: 28,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: scheme.onPrimary.withValues(alpha: 0.7),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
