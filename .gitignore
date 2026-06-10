@@ -1,0 +1,11 @@
+# Flutter
+app/.dart_tool/
+app/build/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+
+# Node
+server/node_modules/
+server/*.db
+server/*.db-shm
+server/*.db-wal
